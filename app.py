@@ -15,15 +15,14 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
 
-@app.route("/job" , methods=['GET','POST'])
+@app.route("/job", methods=['GET','POST'])
 def job():
-    source = "https://jobs.github.com/positions.json?location=new+york"
+    source = "https://jobs.github.com/positions.json?description="
     lang = request.args['lang']
-    source += "&description=" + lang
+    source += lang
     data = urllib2.urlopen(source)
     # access job listings in a []
-    data_string = data.read()
-    d = json.loads(data_string)
+    d = json.loads(data.read())
     # access random job in a {}
     job = random.choice(d)
     return render_template("job.html",
